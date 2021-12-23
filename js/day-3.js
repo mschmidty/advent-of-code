@@ -95,6 +95,8 @@ function parseBinary2(data, iterator, oxygen=true){
   iterator++
   return parseBinary2(redoThisData, iterator, oxygen=oxygen)
 }
+
+//Shared function
 function reshape(data){
   let reshaped = [];
   for(let i = 0; i < data.length; i++){
