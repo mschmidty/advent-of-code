@@ -55,8 +55,10 @@ console.log("Part 2 Answer: " +calcBoard(finalBoardPartTwo)*parseInt(finalBoards
 
 
 
-
+//
 // Functions
+//
+
 function parseData(data){
   const parseNewLine = data.split('\n\n')
   const numbers = parseNewLine[0].split(',');
