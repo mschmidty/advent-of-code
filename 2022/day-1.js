@@ -2,8 +2,6 @@ const fs = require("fs")
 
 const dataURL = "data/day-1.txt"
 
-let goal = 50;
-
 const rawData = fs.readFileSync(dataURL, 'utf-8')
 
 const data = rawData.split(/\n\s*\n/).map(line=>{
