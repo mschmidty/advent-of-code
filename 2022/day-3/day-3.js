@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const dataURL = "./data/day-3.txt"
+const dataURL = "./day-3/day-3.txt"
 const rawData = fs.readFileSync(dataURL, 'utf-8')
 
 const data = rawData

@@ -17,7 +17,7 @@ const elfChoicesKey = [['A', "Rock"], ["B", "Paper"], ["C", "Scissors"]]
 const myChoicesKey = [['X', "Rock", 1], ["Y", "Paper", 2], ["Z", "Scissors", 3]]
 
 //Load the data
-const dataURL = "./data/day-2.txt"
+const dataURL = "./day-2/day-2.txt"
 const rawData = fs.readFileSync(dataURL, 'utf-8')
 
 const data = rawData.split("\n").map(round => {
