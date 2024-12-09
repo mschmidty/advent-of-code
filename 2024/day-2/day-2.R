@@ -1,37 +1,68 @@
 library(tidyverse)
 
 data <- read_lines("day-2-test.txt") |>
-  str_split(" +")
+  str_split(" +") |>
+  lapply(as.numeric)
 
 data <- read_lines("day-2.txt") |>
-  str_split(" +")
+  str_split(" +") |>
+  lapply(as.numeric)
 
 
 check_report <- function(x) {
-  i_or_d <- "start"
-  safe <- TRUE
-  r <- 1
-  for (i in seq_along(x)) {
-    t <- as.numeric(x[i]) - as.numeric(x[i + 1])
-    if (t > 0 & i_or_d %in% c("increase", "start") & abs(t) < 4) {
-      i_or_d <- "increase"
-    } else if (t < 0 & i_or_d %in% c("decrease", "start") & abs(t) < 4) {
-      i_or_d <- "decrease"
-    } else {
-      safe <- FALSE
-    }
-    if (!safe) {
-      r <- 0
-      break
-    }
-    if (i == length(x) - 1) {
-      break
-    }
+  d <- diff(x)
+  check_length <- length(x) - 1
+
+  t_inc <- (d > 0 & abs(d) < 4) |>
+    sum()
+  t_dec <- (d < 0 & abs(d) < 4) |>
+    sum()
+
+  if (t_inc == check_length | t_dec == check_length) {
+    return(1)
+  } else {
+    return(0)
   }
-  r
 }
 
+check_report2 <- function(y) {
+  c1 <- check_report(y)
+  if (c1 == 1) {
+    return(1)
+  } else {
+    d <- diff(y)
+    check_length <- length(y) - 2
+
+    t_inc <- (d > 0 & abs(d) < 4)
+    t_dec <- (d < 0 & abs(d) < 4)
+
+    if (sum(t_inc) > 1) {
+      s <- match(FALSE, t_inc)
+      c2 <- check_report(y[-s])
+      c3 <- check_report(y[-(s + 1)])
+      if (c2 == 1 | c3 == 1) {
+        return(1)
+      }
+    } else if (sum(t_dec) > 1) {
+      s <- match(FALSE, t_dec)
+      c4 <- check_report(y[-s])
+      c5 <- check_report(y[-(s + 1)])
+      if (c4 == 1 | c5 == 1) {
+        return(1)
+      }
+    } else {
+      return(0)
+    }
+  }
+}
+## Answer part 1
 data |>
   lapply(check_report) |>
+  unlist() |>
+  sum()
+
+## Answer part 2
+data |>
+  lapply(check_report2) |>
   unlist() |>
   sum()
