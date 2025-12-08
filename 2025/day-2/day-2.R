@@ -35,7 +35,56 @@ get_matches <- function(x) {
     0
   }
 }
-sequences |>
+part_1 <- sequences |>
   lapply(map, get_matches) |>
   unlist() |>
   sum()
+
+get_multi_match <- function(x) {
+  length <- x |>
+    as.character() |>
+    str_length()
+
+  mid <- ceiling(length / 2)
+
+  dividers <- c()
+  for (num in mid:1) {
+    if (length %% num == 0) {
+      dividers <- c(dividers, num)
+    }
+  }
+  split_n_equal <- function(n, s) {
+    len <- nchar(s)
+
+    start_indices <- seq(1, len, by = n)
+
+    sapply(start_indices, function(start) {
+      substring(s, start, start + n - 1)
+    })
+  }
+  y <- 0
+  for (num in dividers) {
+    split <- split_n_equal(num, x)
+    # print(split)
+    if (all(split == split[1]) && length > 1) {
+      y <- x
+      break()
+    }
+  }
+  y
+}
+
+
+p2_all_num <- sequences |>
+  lapply(map, get_multi_match)
+
+p2_v <- p2_all_num |>
+  unlist()
+
+p2_v |>
+  sum()
+
+## finding mistakes
+p2_v_filter <- p2_v != 0
+
+p2_v[p2_v_filter]
